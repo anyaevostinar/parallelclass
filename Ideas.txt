@@ -1,0 +1,4 @@
+Ideas:
+Island model
+Island model with migration
+Add space and time element (ie for loop) where organisms reproduce when they count up to a certain number

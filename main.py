@@ -9,7 +9,9 @@ class Organism:
     if len(genome):
       self.genome = genome
     elif parent:
-      newGenome = parent.genome
+      newGenome =[]
+      for i in range(len(parent.genome)):
+        newGenome.append(parent.genome[i])
       flipBit = random.randint(0, len(newGenome)-1)
       newGenome[flipBit] = 0 if newGenome[flipBit] == 1 else 1
       self.genome = newGenome
@@ -18,9 +20,8 @@ class Organism:
     self.evalFitness()
 
   def evalFitness(self):
-    self.fitness = 0
-    for i in range(len(self.genome)):
-      self.fitness += self.genome[i]
+    self.fitness = sum(self.genome)
+    return self.fitness
 
 
 class Population:
@@ -34,13 +35,13 @@ class Population:
 
   def makeOrg(self):
     '''A function to make a new organism randomly'''
-    randomBitArray = numpy.random.randint(2, size=(50,))
+    randomBitArray = numpy.random.randint(2, size=(10,))
     newOrg = Organism(genome=randomBitArray)
     return newOrg
 
   def tournamentSelection(self):
     tournamentorgs = set([])
-    while len(tournamentorgs)<5:
+    while len(tournamentorgs)<3:
       tournamentorgs.add(random.choice(self.orgs))
     tournamentorgs = list(tournamentorgs)
     fittest = self.findBest(tournamentorgs)
@@ -52,16 +53,19 @@ class Population:
     self.currentUpdate+=1
     self.tournamentSelection()
     fittest = self.findBest()
-    print fittest.fitness
 
   def findBest(self, orgs_to_eval=False):
     if not orgs_to_eval:
       orgs_to_eval = self.orgs
     highest_fitness = 0
-    for i in range(len(orgs_to_eval)):
-      if orgs_to_eval[i].fitness >= highest_fitness:
-        highest_fitness = orgs_to_eval[i].fitness
-        fittest_org = orgs_to_eval[i]
+    fittest_org = False
+    for org in orgs_to_eval:
+      if org.fitness > highest_fitness:
+        highest_fitness = org.fitness
+        fittest_org = org
+  
+    if not fittest_org:
+      print "Error! No Org selected!"
     return fittest_org
 
 num_updates = 1000
