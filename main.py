@@ -1,5 +1,6 @@
 import random
 import numpy
+from mpi4py import MPI
 
 #Our code yey
 
@@ -35,7 +36,7 @@ class Population:
 
   def makeOrg(self):
     '''A function to make a new organism randomly'''
-    randomBitArray = numpy.random.randint(2, size=(10,))
+    randomBitArray = numpy.random.randint(2, size=(50,))
     newOrg = Organism(genome=randomBitArray)
     return newOrg
 
@@ -68,10 +69,35 @@ class Population:
       print "Error! No Org selected!"
     return fittest_org
 
+  def migrate(self):
+    leaving = random.choice(self.orgs)
+    self.orgs.remove(leaving)
+    comm.isend(leaving, dest = (rank+1)%size, tag=0)
+    arriving = comm.recv(source =(rank+(size-1))%size, tag=0)
+    self.orgs.append(arriving)
+    print "migration!"
+
+comm = MPI.COMM_WORLD
+size = comm.Get_size()
+rank = comm.Get_rank()
+
 num_updates = 1000
 pop_size = 100
 population_orgs = Population(pop_size)
 for i in range(num_updates):
+  if i%100 == 0:
+    population_orgs.migrate()
   population_orgs.update()
 
-print population_orgs.findBest().genome
+best = population_orgs.findBest().genome
+data = comm.gather(best, root = 0)
+
+if rank == 0:
+  top_fitness = 0
+  best_genome = []
+  for genome in data:
+    temp_fit = sum(genome)
+    if top_fitness < temp_fit:
+      top_fitness = temp_fit
+      best_genome = genome
+  print top_fitness
