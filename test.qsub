@@ -1,0 +1,26 @@
+#!/bin/bash -login
+ 
+### walltime - how long you expect the job to run
+#PBS -l walltime=01:00:00
+ 
+### nodes:ppn - how many nodes & cores per node (ppn) that you require
+#PBS -l nodes=1:ppn=16
+ 
+### mem: amount of memory that the job will need
+#PBS -l mem=1gb
+ 
+### you can give your job a name for easier identification
+###PBS -N orgmain
+
+
+ 
+### load necessary modules, e.g.
+module load NumPy
+module load SciPy
+module load mpi4py
+ 
+### change to the working directory where your code is located
+cd ~/ParallelProc/project/parallelclass
+ 
+### call your executable
+mpirun -n 16 python orgmain.py
