@@ -1,7 +1,7 @@
 import random
 import numpy
 from mpi4py import MPI
-
+import sys
 #Our code yey
 
 class Organism:
@@ -31,7 +31,7 @@ class Organism:
   def mutate(self):
     newGenome = self.genome
     flipBit = random.randint(0, len(newGenome)-1)
-    newGenome[flipBit] = 0 if newGenome[flipBit] == 1 else 1
+    newGenome[flipBit] = random.randint(0,1)
     self.genome = newGenome
       
 
@@ -46,7 +46,7 @@ class Population:
 
   def makeOrg(self):
     '''A function to make a new organism randomly'''
-    randomBitArray = numpy.random.randint(2, size=(50,))
+    randomBitArray = numpy.random.randint(2, size=(20,))
     newOrg = Organism(genome=randomBitArray)
     return newOrg
 
@@ -88,11 +88,13 @@ comm = MPI.COMM_WORLD
 size = comm.Get_size()
 rank = comm.Get_rank()
 
-num_updates = 1000
-pop_size = 100
+num_updates = 10000
+pop_size = int(sys.argv[1])
+
+starttime=MPI.Wtime()
 population_orgs = Population(pop_size)
 for i in range(num_updates):
-  if i%100 == 0:
+  if i%10 == 0:
     population_orgs.migrate()
   population_orgs.update()
 
@@ -107,4 +109,12 @@ if rank == 0:
     if top_fitness < temp_fit:
       top_fitness = temp_fit
       best_genome = genome
-  print top_fitness
+  #print top_fitness
+
+comm.Barrier()
+finish = MPI.Wtime()
+if rank == 0:
+  fname = "timings_script3_long.csv"
+  outFile = open(fname, 'a')
+  outFile.write(str(finish-starttime)+","+str(pop_size)+","+str(size)+","+str(top_fitness)+"\n")
+

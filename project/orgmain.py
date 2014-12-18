@@ -1,16 +1,17 @@
 import random
 import numpy
 from mpi4py import MPI
+import sys
 
 #Our code yey
 comm = MPI.COMM_WORLD
 size = comm.Get_size()
 rank = comm.Get_rank()
 
-num_updates = 2000000
-row_length = 4
-col_length = 4
-org_length = 50
+num_updates = 10000
+row_length = int(sys.argv[1])
+col_length = int(sys.argv[2])
+org_length = 20
 
 assert size == (row_length*col_length), "World size and thread number don't match"
 
@@ -129,6 +130,9 @@ def update(org):
     r.Cancel()
     
   return org
+
+if rank==0:
+  starttime=MPI.Wtime()
     
 org = Organism()
 
@@ -136,12 +140,15 @@ for i in range(num_updates):
   org = update(org)
   #Why does having a barrier here make the threads print more in sync?
   comm.Barrier()
-  
-for i in range(size):
-  if rank ==i:
-    fname = "org_test.dat"
-    outFile = open(fname, 'a')
-    outFile.write(str(org.genome)+"\n")
-    comm.Barrier()
 
-print "done"
+fitness = 0
+for i in org.genome:
+  fitness += i
+data = comm.reduce(fitness,op=MPI.MAX,root=0)
+
+comm.Barrier()
+if rank == 0:
+  finish = MPI.Wtime()
+  fname = "timings_script4.csv"
+  outFile = open(fname, 'a')
+  outFile.write(str(finish-starttime)+","+str(row_length*col_length)+','+str(size)+','+str(data)+'\n')

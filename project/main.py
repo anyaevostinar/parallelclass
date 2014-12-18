@@ -103,7 +103,7 @@ if rank == 0:
       top_fitness = temp_fit
       best_genome = genome
   #print top_fitness
-
+comm.Barrier()
 finish = MPI.Wtime()
 if rank == 0:
   fname = "timings_script2.csv"
