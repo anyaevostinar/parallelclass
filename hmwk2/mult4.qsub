@@ -1,0 +1,25 @@
+#!/bin/bash -login
+ 
+### walltime - how long you expect the job to run
+#PBS -l walltime=03:00:00
+ 
+### nodes:ppn - how many nodes & cores per node (ppn) that you require
+#PBS -l nodes=16:ppn=1
+ 
+### mem: amount of memory that the job will need
+#PBS -l mem=100gb
+ 
+### you can give your job a name for easier identification
+###PBS -N matrix_mult4
+
+
+ 
+### load necessary modules, e.g.
+module load SciPy/0.13.0
+module load mpi4py
+ 
+### change to the working directory where your code is located
+cd ~/ParallelProc/hmwk2
+ 
+### call your executable
+mpirun -n 16 python matrix_mult4.py 16

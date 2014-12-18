@@ -1,0 +1,102 @@
+----------------------------------------------------------------------
+----     ompP General Information     --------------------------------
+----------------------------------------------------------------------
+Start Date      : Thu Oct 23 15:54:44 2014
+End Date        : Thu Oct 23 15:54:44 2014
+Duration        : 0.00 sec
+Application Name: unknown
+Type of Report  : final
+User Time       : 0.00 sec
+System Time     : 0.00 sec
+Max Threads     : 1
+ompP Version    : 0.8.0
+ompP Build Date : Oct  2 2013 16:33:58
+PAPI Support    : not available
+
+----------------------------------------------------------------------
+----     ompP Region Overview     ------------------------------------
+----------------------------------------------------------------------
+PARALLEL: 1 region:
+ * R00001 sort1.c (10-32)
+
+LOOP: 1 region:
+ * R00002 sort1.c (13-24)
+
+CRITICAL: 1 region:
+ * R00003 sort1.c (25-31) (unnamed)
+
+----------------------------------------------------------------------
+----     ompP Callgraph     ------------------------------------------
+----------------------------------------------------------------------
+
+  Inclusive  (%)   Exclusive  (%)
+   0.00 (100.0%)    0.00 (55.78%)           [unknown: 1 threads]
+   0.00 (44.22%)    0.00 (26.79%) PARALLEL  +-R00001 sort1.c (10-32)
+   0.00 ( 3.81%)    0.00 ( 3.81%)     LOOP     |-R00002 sort1.c (13-24)
+   0.00 (13.62%)    0.00 (13.62%) CRITICAL     +-R00003 sort1.c (25-31) (unnamed)
+
+----------------------------------------------------------------------
+----     ompP Flat Region Profile (inclusive data)     ---------------
+----------------------------------------------------------------------
+R00001 sort1.c (10-32) PARALLEL
+ TID      execT      execC      bodyT   exitBarT   startupT   shutdwnT      taskT
+   0       0.00          1       0.00       0.00       0.00       0.00       0.00
+ SUM       0.00          1       0.00       0.00       0.00       0.00       0.00
+
+R00002 sort1.c (13-24) LOOP
+ TID      execT      execC      bodyT   exitBarT      taskT
+   0       0.00          1       0.00       0.00       0.00
+ SUM       0.00          1       0.00       0.00       0.00
+
+R00003 sort1.c (25-31) (unnamed) CRITICAL
+ TID      execT      execC      bodyT     enterT      exitT
+   0       0.00          1       0.00       0.00       0.00
+ SUM       0.00          1       0.00       0.00       0.00
+
+----------------------------------------------------------------------
+----     ompP Callgraph Region Profiles (incl./excl. data)     -------
+----------------------------------------------------------------------
+
+[*00] unknown
+[+01] R00001 sort1.c (10-32) PARALLEL
+ TID      execT      execC    bodyT/I    bodyT/E   exitBarT   startupT   shutdwnT      taskT
+   0       0.00          1       0.00       0.00       0.00       0.00       0.00       0.00
+ SUM       0.00          1       0.00       0.00       0.00       0.00       0.00       0.00
+
+[*00] unknown
+[+01] R00001 sort1.c (10-32) PARALLEL
+[=02] R00002 sort1.c (13-24) LOOP
+ TID      execT      execC    bodyT/I    bodyT/E   exitBarT      taskT
+   0       0.00          1       0.00       0.00       0.00       0.00
+ SUM       0.00          1       0.00       0.00       0.00       0.00
+
+[*00] unknown
+[+01] R00001 sort1.c (10-32) PARALLEL
+[=02] R00003 sort1.c (25-31) (unnamed) CRITICAL
+ TID      execT      execC    bodyT/I    bodyT/E     enterT      exitT
+   0       0.00          1       0.00       0.00       0.00       0.00
+ SUM       0.00          1       0.00       0.00       0.00       0.00
+
+
+----------------------------------------------------------------------
+----     ompP Overhead Analysis Report     ---------------------------
+----------------------------------------------------------------------
+Total runtime (wallclock)   : 0.00 sec [1 thread]
+Number of parallel regions  : 1
+Parallel coverage           : 0.00 sec (42.46%)
+
+Parallel regions sorted by wallclock time:
+            Type                            Location      Wallclock (%) 
+R00001  PARALLEL                     sort1.c (10-32)       0.00 (42.46) 
+                                                 SUM       0.00 (42.46) 
+
+Overheads wrt. each individual parallel region:
+          Total        Ovhds (%)  =   Synch  (%)  +  Imbal   (%)  +   Limpar (%)   +    Mgmt (%)
+R00001     0.00     0.00 (24.83)    0.00 ( 1.72)    0.00 ( 4.14)    0.00 ( 0.00)    0.00 (18.97)
+
+Overheads wrt. whole program:
+          Total        Ovhds (%)  =   Synch  (%)  +  Imbal   (%)  +   Limpar (%)   +    Mgmt (%)
+R00001     0.00     0.00 (10.54)    0.00 ( 0.73)    0.00 ( 1.76)    0.00 ( 0.00)    0.00 ( 8.05)
+   SUM     0.00     0.00 (10.54)    0.00 ( 0.73)    0.00 ( 1.76)    0.00 ( 0.00)    0.00 ( 8.05)
+
+

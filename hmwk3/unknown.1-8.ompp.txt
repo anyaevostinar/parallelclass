@@ -1,0 +1,70 @@
+----------------------------------------------------------------------
+----     ompP General Information     --------------------------------
+----------------------------------------------------------------------
+Start Date      : Thu Oct 23 16:48:47 2014
+End Date        : Thu Oct 23 16:48:47 2014
+Duration        : 0.00 sec
+Application Name: unknown
+Type of Report  : final
+User Time       : 0.00 sec
+System Time     : 0.00 sec
+Max Threads     : 1
+ompP Version    : 0.8.0
+ompP Build Date : Oct  2 2013 16:33:58
+PAPI Support    : not available
+
+----------------------------------------------------------------------
+----     ompP Region Overview     ------------------------------------
+----------------------------------------------------------------------
+PARALLEL LOOP: 1 region:
+ * R00001 sort1.c (13-25)
+
+----------------------------------------------------------------------
+----     ompP Callgraph     ------------------------------------------
+----------------------------------------------------------------------
+
+  Inclusive  (%)   Exclusive  (%)
+   0.00 (100.0%)    0.00 (88.07%)           [unknown: 1 threads]
+   0.00 (11.93%)    0.00 (11.93%)  PARLOOP  +-R00001 sort1.c (13-25)
+
+----------------------------------------------------------------------
+----     ompP Flat Region Profile (inclusive data)     ---------------
+----------------------------------------------------------------------
+R00001 sort1.c (13-25) PARALLEL LOOP
+ TID      execT      execC      bodyT   exitBarT   startupT   shutdwnT      taskT
+   0       0.00          1       0.00       0.00       0.00       0.00       0.00
+ SUM       0.00          1       0.00       0.00       0.00       0.00       0.00
+
+----------------------------------------------------------------------
+----     ompP Callgraph Region Profiles (incl./excl. data)     -------
+----------------------------------------------------------------------
+
+[*00] unknown
+[=01] R00001 sort1.c (13-25) PARALLEL LOOP
+ TID      execT      execC    bodyT/I    bodyT/E   exitBarT   startupT   shutdwnT      taskT
+   0       0.00          1       0.00       0.00       0.00       0.00       0.00       0.00
+ SUM       0.00          1       0.00       0.00       0.00       0.00       0.00       0.00
+
+
+----------------------------------------------------------------------
+----     ompP Overhead Analysis Report     ---------------------------
+----------------------------------------------------------------------
+Total runtime (wallclock)   : 0.00 sec [1 thread]
+Number of parallel regions  : 1
+Parallel coverage           : 0.00 sec (11.93%)
+
+Parallel regions sorted by wallclock time:
+            Type                            Location      Wallclock (%) 
+R00001   PARLOOP                     sort1.c (13-25)       0.00 (11.93) 
+                                                 SUM       0.00 (11.93) 
+
+Overheads wrt. each individual parallel region:
+          Total        Ovhds (%)  =   Synch  (%)  +  Imbal   (%)  +   Limpar (%)   +    Mgmt (%)
+R00001     0.00     0.00 (66.67)    0.00 ( 0.00)    0.00 ( 6.35)    0.00 ( 0.00)    0.00 (60.32)
+
+Overheads wrt. whole program:
+          Total        Ovhds (%)  =   Synch  (%)  +  Imbal   (%)  +   Limpar (%)   +    Mgmt (%)
+R00001     0.00     0.00 ( 7.95)    0.00 ( 0.00)    0.00 ( 0.76)    0.00 ( 0.00)    0.00 ( 7.20)
+   SUM     0.00     0.00 ( 7.95)    0.00 ( 0.00)    0.00 ( 0.76)    0.00 ( 0.00)    0.00 ( 7.20)
+
+
